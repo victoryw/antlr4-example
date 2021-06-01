@@ -9,14 +9,25 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    antlr
 }
 
 repositories {
     // Use JCenter for resolving dependencies.
     jcenter()
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir("${buildDir}/generated-src/antlr/main")
+        }
+    }
 }
 
 dependencies {
+    antlr("org.antlr:antlr4:4.5")
     // Use JUnit Jupiter API for testing.
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
 
@@ -35,4 +46,9 @@ application {
 tasks.test {
     // Use junit platform for unit tests.
     useJUnitPlatform()
+}
+
+tasks.generateGrammarSource {
+    maxHeapSize = "64m"
+    arguments = arguments + listOf("-package", "antlr4.sql.base","-visitor", "-long-messages")
 }
