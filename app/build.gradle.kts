@@ -51,4 +51,5 @@ tasks.test {
 tasks.generateGrammarSource {
     maxHeapSize = "64m"
     arguments = arguments + listOf("-package", "antlr4.sql.base","-visitor", "-long-messages")
+    outputDirectory = File("${buildDir}/generated-src/antlr/main/antlr4/sql/base");
 }
