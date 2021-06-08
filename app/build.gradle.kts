@@ -6,6 +6,9 @@
  * User Manual available at https://docs.gradle.org/6.7.1/userguide/building_java_projects.html
  */
 
+project.ext.set("antlr4Version", "4.9.2")
+
+
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
@@ -27,7 +30,7 @@ sourceSets {
 }
 
 dependencies {
-    antlr("org.antlr:antlr4:4.5")
+    antlr("org.antlr:antlr4:${project.ext.get("antlr4Version")}")
     // Use JUnit Jupiter API for testing.
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
 
@@ -36,6 +39,8 @@ dependencies {
 
     // This dependency is used by the application.
     implementation("com.google.guava:guava:29.0-jre")
+    implementation("org.antlr:antlr4-runtime:${project.ext.get("antlr4Version")}")
+
 }
 
 application {
@@ -51,5 +56,5 @@ tasks.test {
 tasks.generateGrammarSource {
     maxHeapSize = "64m"
     arguments = arguments + listOf("-package", "antlr4.sql.base","-visitor", "-long-messages")
-    outputDirectory = File("${buildDir}/generated-src/antlr/main/antlr4/sql/base");
+    outputDirectory = File("${buildDir}/generated-src/antlr/main/antlr4/sql/base")
 }
